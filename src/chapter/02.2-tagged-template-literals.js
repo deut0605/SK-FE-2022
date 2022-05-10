@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* -------------------------------------------------------------------------- */
 /* ECMAScript NEXT를 사용해 함수를 작성합니다.                                       */
 /* -------------------------------------------------------------------------- */
@@ -16,13 +17,13 @@ const styled = (styles, target) => {
   );
 };
 
-const $styled = (node) => (styles) =>
+const nestedStyled = (node) => (styles) =>
   (node.style.cssText += styles.reduce(
     (combined, style) => combined + style,
     ''
   ));
 
-$styled(document.body)`
+nestedStyled(document.body)`
   margin: 4rem;
   box-sizing: border-box;
 `;
