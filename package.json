@@ -1,6 +1,7 @@
 {
   "name": "learning-ecmascript-next",
   "scripts": {
+    "start": "npx live-server src",
     "compile": "babel src/chapter/*.js -d compiled",
     "watch": "npm run compile -- --watch",
     "test": "jest --watchAll",
