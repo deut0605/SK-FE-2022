@@ -3,3 +3,15 @@
 // 2. utils 모듈 중, numberWithComma 함수를 추출합니다.
 
 // 3. utils 모듈 중, currencyKR 함수를 currency (별칭) 이름으로 추출합니다.
+
+// JavaScript Env.
+
+// Browser, Standard.
+// ES Modules
+// export
+// import
+
+// Node.js
+// CommonJS Modules
+// module.exports
+// require()

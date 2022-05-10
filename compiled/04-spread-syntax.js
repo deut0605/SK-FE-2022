@@ -1,15 +1,8 @@
-'use strict';
+"use strict";
 
-const integers = [-1, 0, 32, -101, 24];
-// 메서드 빌려쓰기 패턴:  Function.prototype.call|apply|bind
-// ES5
-// let maxInt = Math.max.apply(Math, [302, 1, 2, 30, -101].concat(integers));
+var integers = [-1, 0, 32, -101, 24];
+var maxInt = Math.max.apply(Math, [302, 1, 2, 30, -101].concat(integers));
 
-// ES6
-let maxInt = Matn.max(...[302, 1, 2, 30, -101, ...integers]);
-
-// 믹스인 디자인 패턴
-// 객체 합성 > 객체 상속
 var extend = function extend() {
   var _mixinObject = arguments[0];
 
@@ -40,36 +33,22 @@ var extend = function extend() {
   return _mixinObject;
 };
 
-// 상태 업데이트 함수
-// const setState = (newState) => extend({}, state, newState);
-const setState = (newState) => ({
-  ...state,
-  ...newState,
-  data: [...state.data, ...newState.data],
-});
+var setState = function setState(newState) {
+  return extend({}, state, newState);
+};
 
-// 불변(immutable) 상태
-const state = Object.freeze({
+var state = Object.freeze({
   loading: false,
   error: null,
-  data: [
-    {
-      id: 101,
-      title: '초기 데이터',
-    },
-  ],
+  data: [{
+    id: 101,
+    title: '초기 데이터'
+  }]
 });
-
-// React의 업데이트
-// 업데이트 된 상태 (이전 상태와 합성된 새로운 상태)
-console.log(
-  setState({
-    loading: true,
-    data: [
-      {
-        id: 201,
-        title: '데이터 업데이트',
-      },
-    ],
-  })
-);
+console.log(setState({
+  loading: true,
+  data: [{
+    id: 201,
+    title: '데이터 업데이트'
+  }]
+}));
