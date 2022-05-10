@@ -10,19 +10,21 @@
 const defaultArg = (value, initialValue) => {
   // Ternaries
   // 아래 코드를 3항 연산 식으로 변경합니다.
-  if (value === null || value === undefined) {
-    return initialValue;
-  } else {
-    return value;
-  }
+  // return (value === null || value === undefined) ? initialValue : value;
+  // if (value === null || value === undefined) {
+  //   return initialValue;
+  // } else {
+  //   return value;
+  // }
 
   // Nullish coalescing operator
   // null 병합 연산자를 사용한 식으로 변경합니다.
+  return value ?? initialValue;
 };
 
-const ellipsisText = (text, limit) => {
+const ellipsisText = (text, limit = 100) => {
   // 기본 매개변수를 활용해 코드를 변경합니다.
-  limit = defaultArg(limit, 100);
+  // limit = defaultArg(limit, 100);
   return `${text.slice(0, limit).trim()}...`;
 };
 
@@ -48,22 +50,27 @@ const company = Object.freeze({
 
 let companyName, companyLat;
 
-if ('companyName' in company) {
-  companyName = company.companyName;
-}
+// Type Guard
+// if ('companyName' in company) {
+//   companyName = company.companyName;
+// }
 
-console.log('companyName = ', companyName);
+console.log('companyName = ', company?.companyName);
 
-if ('location' in company) {
-  if ('lat' in company.location) companyLat = company.location.lat;
-}
+// if ('location' in company) {
+//   if ('lat' in company.location) companyLat = company.location.lat;
+// }
 
-console.log('companyLat = ', companyLat);
+console.log('companyLat = ', company?.location?.lat);
 
-if ('getFoundingDate' in company) {
-  if (typeof company.getFoundingDate === 'function') company.getFoundingDate();
-}
+// if ('getFoundingDate' in company) {
+//   if (typeof company.getFoundingDate === 'function') company.getFoundingDate();
+// }
 
-if ('getLocation' in company) {
-  if (typeof company.getLocation === 'function') company.getLocation();
-}
+company?.getFoundingDate?.();
+
+// if ('getLocation' in company) {
+//   if (typeof company.getLocation === 'function') company.getLocation();
+// }
+
+company?.getLocation?.();

@@ -1,16 +1,9 @@
 // RE-EXPORT
 
-/* eslint-disable no-unused-vars */
-// 1. numberWithComma 모듈을 다시 내보냅니다.
-import numberWithComma from './currency/numberWithComma.js';
+// 1. numberWithComma 모듈을 다시 내보냅니다. (기본(default) 내보내기 → 다시 내보내기)
+export { default as numberWithComma } from './currency/numberWithComma.js';
 
-// 2. currency, currencyKR 모듈을 다시 내보냅니다.
-import { currency, currencyKR } from './currency/currency.js';
+// 2. currency, currencyKR 모듈을 다시 내보냅니다. (이름으로 내보내기 → 다시 내보내기)
+export * from './currency/currency.js';
 
-const utils = {
-  numberWithComma,
-  currency,
-  currencyKR,
-};
-
-export default utils;
+export * from './fetchBooks.js';

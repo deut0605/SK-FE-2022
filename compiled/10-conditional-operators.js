@@ -1,15 +1,16 @@
 "use strict";
 
+var _company$location;
+
 var defaultArg = function defaultArg(value, initialValue) {
-  if (value === null || value === undefined) {
-    return initialValue;
-  } else {
-    return value;
-  }
+  return value != null ? value : initialValue;
 };
 
 var ellipsisText = function ellipsisText(text, limit) {
-  limit = defaultArg(limit, 100);
+  if (limit === void 0) {
+    limit = 100;
+  }
+
   return text.slice(0, limit).trim() + "...";
 };
 
@@ -25,23 +26,7 @@ var company = Object.freeze({
   }
 });
 var companyName, companyLat;
-
-if ('companyName' in company) {
-  companyName = company.companyName;
-}
-
-console.log('companyName = ', companyName);
-
-if ('location' in company) {
-  if ('lat' in company.location) companyLat = company.location.lat;
-}
-
-console.log('companyLat = ', companyLat);
-
-if ('getFoundingDate' in company) {
-  if (typeof company.getFoundingDate === 'function') company.getFoundingDate();
-}
-
-if ('getLocation' in company) {
-  if (typeof company.getLocation === 'function') company.getLocation();
-}
+console.log('companyName = ', company == null ? void 0 : company.companyName);
+console.log('companyLat = ', company == null ? void 0 : (_company$location = company.location) == null ? void 0 : _company$location.lat);
+company == null ? void 0 : company.getFoundingDate == null ? void 0 : company.getFoundingDate();
+company == null ? void 0 : company.getLocation == null ? void 0 : company.getLocation();
