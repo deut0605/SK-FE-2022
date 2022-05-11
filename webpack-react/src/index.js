@@ -1,12 +1,14 @@
+import './styles/main.css';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import App from './app/App';
 import { Greeting, IconButton } from './components';
 
 const containerNode = document.getElementById('root');
 
 ReactDOM.render(
   <React.StrictMode>
-    <Greeting message="안녕하세요!" />
+    <App />
   </React.StrictMode>,
   containerNode
 )
