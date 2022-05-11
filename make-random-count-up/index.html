@@ -7,13 +7,13 @@
     
     <title>랜덤 카운트 업 - React 렌더링 뷰 (브라우저 환경)</title>
     
-    <link href="https://spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" />
-    <link rel="shortcut icon" href="https://iili.io/BI9OFI.png" />
+    <link href="//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSansNeo.css" rel="stylesheet" />
+    <link rel="shortcut icon" href="//iili.io/BI9OFI.png" />
     <link href="./css/style.css" rel="stylesheet" />
 
-    <script src="https://unpkg.com/react/umd/react.development.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom/umd/react-dom.development.js" crossorigin></script>
-    <script src="https://unpkg.com/babel-standalone/babel.min.js" crossorigin></script>
+    <script src="//unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="//unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <script src="//unpkg.com/babel-standalone/babel.min.js" crossorigin></script>
   </head>
 
   <body title="화면을 클릭하면 카운트 업이 다시 실행됩니다.">
@@ -26,35 +26,103 @@
       // --------------------------------------------
       
       // 로케이션 리로드 이벤트 리스너
+      const handleReload = () => window.location.reload();
 
       // 문서 객체 클릭 이벤트에 이벤트 리스너 바인딩
-
+      document.addEventListener('click', handleReload);
     </script>
 
     <script type="text/babel">
+
       // --------------------------------------------
       // [모듈: 랜덤 카운트 업]
       // --------------------------------------------
       
       // 최솟값 MIN
+      const MIN = 30;
 
       // 최댓값 MAX
+      const MAX = 70;
 
       // 랜덤값을 반환하는 유틸리티 getRandomCount 함수
+      const getRandomCount = (min = MIN, max = MAX) => {
+        return Math.floor((Math.random() * (max - min)) + min);
+      }
       
       // 목표 카운트 TARGET_COUNT 설정
+      const TARGET_COUNT = getRandomCount();
 
       // 문서 타이틀 업데이트
+      document.title = `(${TARGET_COUNT}) ${document.title}`;
 
-      // count 초깃값
+      // count 상태 초깃값
+      let count = 0;
+
+      // 애니메이션 종료 상태
+      // let isComplete = false;
 
       // DOM 컨테이너 요소 참조
+      const containerNode = document.getElementById('root');
+
+      // 애니메이션을 정지하는 스타일
+      // 조건: count 값이 TARGET_COUNT와 같거나 커지면 애니메이션 정지
+      const stopWiggle = {
+        animationName: 'none'
+      }
+
+      // React Component (Functional) → React Node (Element)
+      // Destructuring Assignment
+      function RandomCountUp({ isComplete, count }) {
+        console.log(count);
+        // [Compile] JSX → Babel → React Element
+        return <output style={isComplete ? stopWiggle : null}>{count}</output>
+      }
 
       // render 함수
+      function render(isComplete) {
+        ReactDOM.render(
+          <React.StrictMode>
+            {/* <RandomCountUp isComplete={isComplete} /> */}
+            {
+              React.createElement(
+                RandomCountUp,
+                {
+                  isComplete,
+                  count
+                }
+              )
+            }
+          </React.StrictMode>,
+          containerNode
+        )
+      }
+
+      render();
 
       // animate 함수
+      function animate() {
+        // 카운트 UP (count 업데이트)
+        count += 1;
+        // 카운트, 목표 카운트 비교
+        // 조건 변수 isComplete 업데이트
+        let isComplete = count >= TARGET_COUNT;
+        // 조건 변수의 값이 참/거짓
+        if (isComplete) {
+          // 타임 클린업
+          clearInterval(clearId);
+        } 
+
+        // 앱 렌더링
+        render(isComplete);
+      }
+
+      const FPS = 60/1000; // 60fps
 
       // 타이머 설정
+      // requestAnimationFrame → reculsive call
+      // setTimeout → cleanup
+      // setInterval → cleanup
+      const clearId = setInterval(animate, FPS);
 
     </script>
   </body>
