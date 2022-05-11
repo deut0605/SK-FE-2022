@@ -70,28 +70,31 @@
         animationName: 'none'
       }
 
-      // React Component (Functional) → React Node (Element)
+      // React Component (Functional Type) → React Node (Element)
       // Destructuring Assignment
-      function RandomCountUp({ isComplete, count }) {
-        console.log(count);
-        // [Compile] JSX → Babel → React Element
-        return <output style={isComplete ? stopWiggle : null}>{count}</output>
+      // function RandomCountUp({ isComplete, count }) {
+      //   console.log(count);
+      //   // [Compile] JSX → Babel → React Element
+      //   return <output style={isComplete ? stopWiggle : null}>{count}</output>
+      // }
+
+      // React Component (Class Type) → React Node (Element)
+      class RandomCountUp extends React.Component {
+        constructor(props) {
+          super(props);
+        }
+
+        render() {
+          const { isComplete, count } = this.props;
+          return <output style={isComplete ? stopWiggle : null}>{count}</output>
+        }
       }
 
       // render 함수
       function render(isComplete) {
         ReactDOM.render(
           <React.StrictMode>
-            {/* <RandomCountUp isComplete={isComplete} /> */}
-            {
-              React.createElement(
-                RandomCountUp,
-                {
-                  isComplete,
-                  count
-                }
-              )
-            }
+            <RandomCountUp isComplete={isComplete} count={count} />
           </React.StrictMode>,
           containerNode
         )
