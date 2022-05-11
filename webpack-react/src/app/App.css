@@ -1,33 +1,18 @@
-.randomCountUp {
-	cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-	font-weight: 100;
-	font-size: 50vh;
-	line-height: 1;
-  background: #000;
+.app .reloadButton {
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  padding: 8px 16px;
+  letter-spacing: 0.1em;
+  font-weight: 300;
+  background: transparent;
   color: #fff;
+  transition: all 0.2s ease-in-out;
 }
 
-.randomCountUp output {
-  user-select: none;
-  cursor: inherit;
-  animation: wiggle steps(3) 600ms infinite alternate;
-}
-
-@keyframes wiggle {
-  0% {
-    opacity: 1;
-  }
-  33.3333% {
-    opacity: 0.4;
-  }
-  66.6666% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 0;
-  }
+.app .reloadButton:hover {
+  background: #fff;
+  color: #000;
 }
