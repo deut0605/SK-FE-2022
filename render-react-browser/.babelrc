@@ -1,5 +1,0 @@
-{
-  "comments": false,
-  "compact": false,
-  "presets": ["@babel/preset-env"]
-}
