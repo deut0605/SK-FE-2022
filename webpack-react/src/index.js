@@ -1,14 +1,12 @@
-const logger = (message, cssCode) => {
-  console.log(`%c${message}`, cssCode);
-};
+import * as React from 'react';
+import * as ReactDOM from 'react-dom';
+import { Greeting, IconButton } from './components';
 
-const formatText = (text) =>
-  text.toString().replace(/\n\s+/g, '').trim();
+const containerNode = document.getElementById('root');
 
-logger(
-  '안녕! 웹팩 😃',
-  formatText(`
-    font-size: 4rem;
-    font-weight: bold;
-  `)
-);
+ReactDOM.render(
+  <React.StrictMode>
+    <Greeting message="안녕하세요!" />
+  </React.StrictMode>,
+  containerNode
+)
