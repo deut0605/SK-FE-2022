@@ -1,7 +1,8 @@
 @import url('./common/initializer.css');
+@import url('./components/iconButton.css');
 
 body {
-  cursor: pointer;
+  /* cursor: pointer; */
   display: flex;
   justify-content: center;
   align-items: center;
