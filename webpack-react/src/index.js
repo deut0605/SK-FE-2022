@@ -8,7 +8,7 @@ const containerNode = document.getElementById('root');
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <App max={42} />
   </React.StrictMode>,
   containerNode
-)
+);
