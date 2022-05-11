@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "name": "webpack-react",
+  "version": "1.0.0",
+  "description": "Webpack 모듈 번들러를 사용해 React 개발 환경을 직접 구성",
+  "scripts": {
+    "start": "npm run serve -- --open",
+    "bundle": "webpack",
+    "serve": "webpack serve",
+    "build": "webpack build --mode=production"
+  },
+  "devDependencies": {
+    "webpack": "5.72.1",
+    "webpack-cli": "4.9.2",
+    "webpack-dev-server": "4.9.0"
+  }
+}
