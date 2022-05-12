@@ -1,11 +1,11 @@
 import 'styles/global.css';
 import { StrictMode } from 'react';
 import { render } from 'react-dom';
-import { ConditionalRendering } from './App';
+import { ListRedering } from './App';
 
 render(
   <StrictMode>
-    <ConditionalRendering />
+    <ListRedering />
   </StrictMode>,
   document.getElementById('root')
 );
