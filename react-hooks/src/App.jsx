@@ -1,68 +1,32 @@
-import Child from './components/Child';
-import Display from './components/Display';
+import React, { useState } from 'react';
+import Parent from './components/Parent';
+import SignIn from './components/SignIn';
+import { AuthProvider, AppStateContext } from './contexts';
 
-import React, {
-  useState,
-  useEffect,
-  createRef, // only class component
-  useRef, // only functional component
-  createContext,
-  useContext,
-  useCallback,
-  useMemo,
-  memo,
-} from 'react';
-
-// 성능 관리를 위해 알아야 할 React Hooks
-// - useCallback
-// - useMemo
-// - React.memo
-
-function Parent({ appState }) {
-  const [count, setCount] = useState(100);
-  const [anotherState, setAnotherState] = useState(null);
-
-  // 참조 동일성
-  // const handleUpdateCount = () => setCount((c) => c + 10);
-  const handleUpdateCount = useCallback(() => setCount((c) => c + 10), []);
-  // const handleUpdateCount = useMemo(() => () => setCount((c) => c + 10), []);
-
-  // const renderElements = useMemo(
-  //   () => (
-  //     <div
-  //       className="parent"
-  //       style={{ display: 'flex', flexFlow: 'column', gap: 8 }}
-  //     >
-  //       <Child onUpdateCount={handleUpdateCount} />
-  //       <Child onUpdateCount={handleUpdateCount} />
-  //       <Display value={count} />
-  //       <Child onUpdateCount={handleUpdateCount} />
-  //       <Child onUpdateCount={handleUpdateCount} />
-  //     </div>
-  //   ),
-  //   [count]
-  // );
-
-  return (
-    <div
-      className="parent"
-      style={{ display: 'flex', flexFlow: 'column', gap: 8 }}
-    >
-      <Child appState={appState} onUpdateCount={handleUpdateCount} />
-      <Child appState={appState} onUpdateCount={handleUpdateCount} />
-      <Display value={count} />
-      <Child appState={appState} onUpdateCount={handleUpdateCount} />
-      <Child appState={appState} onUpdateCount={handleUpdateCount} />
-    </div>
-  );
-}
+// 1. Context를 생성한다.
+// 2. Context.Provider 컴포넌트를 사용해 value prop을 통해 `context` value를 공급한다.
+// 3-1. Conotext.Consumer 컴포넌트를 사용(render props 패턴)해 `context` value를 수급한다. (class)
+// 3-2. useContext 훅을 사용해 `context` value를 수급한다. (function)
 
 export default function App() {
-  const [appState] = useState('app state');
+  const [appState, setAppState] = useState('app state');
+
+  const contextValue = React.useMemo(
+    () => ({
+      appState,
+      setAppState,
+    }),
+    [appState]
+  );
 
   return (
-    <div className="app" style={{ padding: 30 }}>
-      <Parent appState={appState} />
-    </div>
+    <AuthProvider>
+      <div className="app" style={{ padding: 30 }}>
+        <AppStateContext.Provider value={contextValue}>
+          <Parent />
+        </AppStateContext.Provider>
+        <SignIn />
+      </div>
+    </AuthProvider>
   );
 }

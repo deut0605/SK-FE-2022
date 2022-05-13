@@ -1,15 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
+import { AppStateContext, useAuth } from '../contexts';
 
-function Child({ appState, onUpdateCount }) {
+function Child({ onUpdateCount }) {
   const propCallbackRef = useRef(null);
-
-  console.log(appState);
+  const { appState } = useContext(AppStateContext);
 
   useEffect(() => {
     if (!propCallbackRef.current) {
       propCallbackRef.current = onUpdateCount; // onUpdateCount: f(){}
     } else {
-      console.log(Object.is(propCallbackRef.current, onUpdateCount));
+      // console.log(Object.is(propCallbackRef.current, onUpdateCount));
     }
   });
 
