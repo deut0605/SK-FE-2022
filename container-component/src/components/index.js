@@ -4,3 +4,4 @@
 export * from './A11yHidden/A11yHidden';
 export * from './HomeLink/HomeLink';
 export * from './Container/Container';
+export * from './ClassComponent/ClassComponent';
