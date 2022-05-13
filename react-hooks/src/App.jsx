@@ -1,149 +1,59 @@
-import { useState, useEffect } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import $ from 'jquery';
 
-// 훅을 사용할 수 없는 경우
-// function callHooks() {
-//   const [a] = useState(10);
-// }
+export default function App() {
+  const [list] = React.useState([
+    { id: 1, text: 'item1', link: '#hook-1' },
+    { id: 2, text: 'item2', link: '#hook-2' },
+    { id: 3, text: 'item3', link: '#hook-3' },
+    { id: 4, text: 'item4', link: '#hook-4' },
+  ]);
 
-class CComp extends React.Component {
-  state = {
-    x: 0,
-    y: 0,
-    z: 0,
-  };
-
-  method: () => {
-    this.setState({
-      z: 10
-    }, () => {
-      // React 상태 업데이트는 동기 처리가 아닙니다.
-      console.log(this.state); // { x: 0, y: 0, z: 10 }
-    });
-
-    console.log(z); // 10???
-  }
-}
-
-// 함수형 컴포넌트에서는 훅을 호출할 수 있다.
-// 클래스 컴포넌트는 훅을 사용할 수 없다.
-function App() {
-  // [state, setState]
-  const [count, setCount] = useState(0);
-
-  // useEffect를 state와 연관지어 사용하는 이유
-  // 기존 class 컴포넌트의 setState() 콜백과 유사
-  useEffect(() => {
-    console.log(count); // 1
-  }, [count]);
-
-  // 라이프 사이클 메서드 흉내
-  // componentDidMount() {}
-  useEffect(() => {}, []);
-  // componentDidMount() {}
-  // componentDidUpdate() {}
-  useEffect(() => {});
-  // componentWillUnmount
-  // cleanup
-  useEffect(() => {
-    // $, jQuery
-    // subscription
-    // const assignPluginInstance = $('.assign-plugin').assignPlugin({}); // .destory()
-    const unsubscribe = subscribe(user);
-
-    // cleanup (return function)
-    // cancel subscription
-    // return () => assignPluginInstance.destory();
-    return () => unsubscribe()
-  });
-
-  // 하면 안되는 패턴 1
-  // useEffect(() => checkCount(count), [count]);
-
-  useEffect(() => {
-    checkCount(count)
-    // return undefined
-  }, [count]);
-
-  const [loading, setLoading] = useState(true);
-  const [data, setData] = useState(null);
-  const [error, setError] = useState(null);
-
-  // 하면 안되는 패턴 2
-  // useEffect(async () => {
-  //   try {
-  //     const response = await axios.get(apiAddress);
-  //     setData(response);
-  //   } catch (error) {
-  //     setError(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, []);
-
-  useEffect(() => {
-    async function dataFetch() {
-      try {
-        const response = await axios.get(apiAddress);
-        setData(response);
-      } catch (error) {
-        setError(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    dataFetch():
+  // 문서(DOM)에 접근, 조작해야 한다면??
+  // 사이드 이펙트 (명령형 프로그래밍 컨트롤)
+  React.useEffect(() => {
+    const item3 = $('.demo li:nth-of-type(3) a');
+    item3.css('color', 'maroon');
   }, []);
 
-  // useEffect(() => {
-  //   // 서버로부터 요청한 데이터를 패치(응답)
-  //   // Promise 또는 Async 함수 활용
-  //   axios.get(apiAddress)
-  //     .then(response => console.log(responose))
-  //     .catch(error => console.error(error.message));
-  // }, []);
+  // useState, useReducer 훅은 컴포넌트 리-랜더링 영향
+  // useRef 참조 객체의 current 값은 뮤테이션(mutation) 가능 : 컴포넌트 리-랜더링 영상 안 줌
+  // 1. DOM 노드 참조용
+  // 2. 렌더링에 영향을 주지 않는 데이터 값 기억하고자 할 때
 
-  const handleClick = () => {
-    setCount((count) => count + 1);
-  };
+  // CASE 1
+  const firstListItemRef = React.useRef(null); // { current }
+  // console.log('in functional component: ', firstListItemRef);
+
+  React.useEffect(() => {
+    // console.log('in effect function: ', firstListItemRef);
+    $(firstListItemRef.current).attr('title', '첫번째 리스트 아이템');
+  }, []);
+
+  // CASE 2
+  const [count, setCount] = useState(100);
+  useEffect(() => {
+    setCount(1000); // 상태 업데이트 , 리-랜더링 1회 수행
+  }, []);
+
+  const numberRef = useRef(100);
+  useEffect(() => {
+    numberRef.current++;
+    console.log(numberRef.current); // 101
+  }, []);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={handleClick}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
+    <div className="demo">
+      <output>{{count}}</output>
+      <output>{{numberRef.current}}</output>
+      <ul>
+        <li ref={firstListItemRef}>first list item element</li>
+        {list.map(({ id, text, link }) => (
+          <li key={id}>
+            <a href={link}>{text}</a>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-export default App;
