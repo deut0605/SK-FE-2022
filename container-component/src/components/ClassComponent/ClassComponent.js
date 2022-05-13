@@ -1,10 +1,34 @@
-import { parent, child } from './ClassComponent.module.css';
+/* eslint-disable no-unused-vars */
+
+import { parent } from './ClassComponent.module.css';
 import React, { Component } from 'react';
-import { PropTypes } from 'utils';
+import { NestedComponent } from './NestedComponent';
+import {
+  string,
+  number,
+  oneOfType,
+  oneOf,
+  node,
+  elementType,
+  shape,
+  arrayOf,
+} from 'prop-types';
 
 export class ClassComponent extends Component {
   static defaultProps = {
-    as: 'div', // string (html standard element name) | React ComponentType | React Fragment
+    as: 'div',
+  };
+
+  static propTypes = {
+    /** 렌더링 될 요소 또는 컴포넌트 타입을 설정합니다. */
+    as: oneOfType([string, node, elementType]),
+    // type: oneOf(['hamberger', 'cart', 'flag']),
+    // numbers: arrayOf(oneOfType([number, string])),
+    // accordionList: arrayOf(shape({
+    //   id: string.isRequired,
+    //   title: string.isRequired,
+    //   description: string.isRequired,
+    // }),
   };
 
   state = {
@@ -29,47 +53,3 @@ export class ClassComponent extends Component {
     );
   }
 }
-
-const NestedComponent = ({ brand, onChangeBrand }) => (
-  <>
-    <h2
-      style={{
-        color: '#fff',
-      }}
-    >
-      Nested Component
-    </h2>
-    <ChildComponent brand={brand} onChangeBrand={onChangeBrand} />
-  </>
-);
-
-NestedComponent.propTypes = {
-  // 매뉴얼 방식의 prop validation
-  brand: PropTypes.string,
-};
-
-function ChildComponent({ brand, onChangeBrand }) {
-  return (
-    <button type="button" className={child} onClick={onChangeBrand}>
-      {brand}
-    </button>
-  );
-}
-
-ChildComponent.propTypes = {
-  // 매뉴얼 방식의 prop validation
-  brand(props, propName, ComponentName) {
-    let value = props[propName];
-    let valueType = typeof value;
-    if (valueType !== 'string') {
-      throw new Error(
-        `${ComponentName} 컴포넌트에 전달된 ${propName} prop의 기대 타입은 string이지만, 전달된 값의 타입은 ${valueType}입니다.`
-      );
-    }
-  },
-};
-
-ChildComponent.propTypes = {
-  // 매뉴얼 방식의 prop validation
-  brand: PropTypes.string,
-};

@@ -23,7 +23,7 @@ export class Container extends Component {
   }
 
   render() {
-    const { loading, error, makeupData, isComplete, count } = this.state;
+    const { loading, error, makeupData, isComplete } = this.state;
 
     // console.log('render: ', document.querySelector('.Container button'));
 

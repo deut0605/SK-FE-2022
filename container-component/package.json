@@ -37,5 +37,8 @@
       "last 1 safari version",
       "ie 11"
     ]
+  },
+  "devDependencies": {
+    "prop-types": "15.8.1"
   }
 }
