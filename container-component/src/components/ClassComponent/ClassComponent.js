@@ -1,7 +1,12 @@
 import { parent, child } from './ClassComponent.module.css';
 import React, { Component } from 'react';
+import { PropTypes } from 'utils';
 
 export class ClassComponent extends Component {
+  static defaultProps = {
+    as: 'div', // string (html standard element name) | React ComponentType | React Fragment
+  };
+
   state = {
     brand: 'euid',
   };
@@ -38,6 +43,11 @@ const NestedComponent = ({ brand, onChangeBrand }) => (
   </>
 );
 
+NestedComponent.propTypes = {
+  // 매뉴얼 방식의 prop validation
+  brand: PropTypes.string,
+};
+
 function ChildComponent({ brand, onChangeBrand }) {
   return (
     <button type="button" className={child} onClick={onChangeBrand}>
@@ -45,3 +55,21 @@ function ChildComponent({ brand, onChangeBrand }) {
     </button>
   );
 }
+
+ChildComponent.propTypes = {
+  // 매뉴얼 방식의 prop validation
+  brand(props, propName, ComponentName) {
+    let value = props[propName];
+    let valueType = typeof value;
+    if (valueType !== 'string') {
+      throw new Error(
+        `${ComponentName} 컴포넌트에 전달된 ${propName} prop의 기대 타입은 string이지만, 전달된 값의 타입은 ${valueType}입니다.`
+      );
+    }
+  },
+};
+
+ChildComponent.propTypes = {
+  // 매뉴얼 방식의 prop validation
+  brand: PropTypes.string,
+};

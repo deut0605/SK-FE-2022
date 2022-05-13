@@ -2,8 +2,10 @@ import styles from './A11yHidden.module.css';
 import React from 'react';
 import classNames from 'classnames';
 
+// CDD: Storybook (Test, Documentation, Collaboration (with Designer))
+
 export const A11yHidden = ({
-  as: Comp = 'span',
+  as: Comp,
   focusable,
   className,
   external,
@@ -20,3 +22,7 @@ export const A11yHidden = ({
     {...restProps}
   />
 );
+
+A11yHidden.defaultProps = {
+  as: 'span',
+};
